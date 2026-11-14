@@ -6,7 +6,7 @@
 <script src="/app.js"></script><script src="/screens.js"></script>
 <script>
 (async()=>{await layout('products');const {products,site}=await catalog();
-const slug=location.pathname.split('/').pop();const p=products.find(x=>x.slug===slug);
+const slug=location.pathname.split('/').filter(Boolean).pop();const p=products.find(x=>x.slug===slug);
 const m=document.getElementById('main');
 if(!p){document.title='Product not found';m.innerHTML='<div class="wrap"><div class="empty" style="margin:60px 0">Product not found. <a href="/products">Back to all products</a></div></div>';return;}
 m.style.setProperty('--product-accent',p.accent||'#087f8c');
