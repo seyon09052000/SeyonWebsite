@@ -196,7 +196,6 @@ async function layout(active) {
     <nav class="footer-links" aria-label="Footer"><h3>Quick links</h3><a href="/products">All products <span aria-hidden="true">↗</span></a><a href="/services">IT services</a><a href="/about">About us</a><a href="/contact">Contact</a>${site.contact_email ? `<a href="mailto:${esc(site.contact_email)}">${esc(site.contact_email)}</a>` : ''}<a href="/privacy">Privacy policy</a><a href="/terms">Terms of use</a></nav></div>
     </div><div class="footer-bottom">
       <a class="footer-signature" href="/" aria-label="${esc(site.company)} home"><span class="logo-crop"><img src="/assets/brand/seyon.png" alt="${esc(site.company)}"></span><span class="brand-tag">${esc(site.brand_tagline || '')}</span></a>
-      <a class="footer-partner" href="${LAPUPTECH_URL}" target="_blank" rel="noopener" aria-label="${esc(site.partner)}"><img class="partner-logo" src="/assets/brand/lapuptech.png" alt="${esc(site.partner)}" loading="lazy"></a>
       <p>© ${new Date().getFullYear()}, ${esc(site.company)}. All rights reserved.</p>
       <a class="footer-back-top" href="#nav">Back to top <span aria-hidden="true">↑</span></a>
     </div></footer>
