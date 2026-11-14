@@ -591,3 +591,19 @@ section.s { padding-block: 56px; }
 .rn-sw { border-left: 4px solid #4a8ff2; } .rn-hw { border-left: 4px solid #f39c2d; }
 @media (prefers-reduced-motion: reduce) { .runner-track { animation: none; } .runner { overflow-x: auto; } }
 @media (max-width: 600px) { .runner-item { font-size: .88rem; padding: 8px 16px 8px 10px; } .runner-track { animation-duration: 34s; } }
+
+/* ---------- Slim runner directly under the header (home) ---------- */
+.runner-slim { position: relative; z-index: 2; overflow: hidden; background: linear-gradient(90deg, #eaf3fe, #e3f7f3 50%, #fff1d9); border-bottom: 1px solid var(--tint-line, rgba(31,77,87,.12)); padding: 6px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.rs-track { display: flex; width: max-content; gap: 10px; animation: rs-left 60s linear infinite; }
+.runner-slim:hover .rs-track { animation-play-state: paused; }
+@keyframes rs-left { to { transform: translateX(-50%); } }
+.rs-item { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto; padding: 3px 14px 3px 5px; border-radius: 999px; background: #fff; border: 1px solid rgba(31,77,87,.12); color: var(--text); font-weight: 700; font-size: .8rem; line-height: 1; text-decoration: none; white-space: nowrap; transition: transform .2s; }
+.rs-item:hover { transform: translateY(-1px); }
+.rs-ic { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: .8rem; overflow: hidden; }
+.rs-sw .rs-ic { background: #e4f0fd; } .rs-sw .rs-ic img { width: 100%; height: 100%; object-fit: contain; border-radius: 5px; }
+.rs-hw .rs-ic { background: #fff0da; }
+.rs-sw { border-left: 3px solid #4a8ff2; } .rs-hw { border-left: 3px solid #f39c2d; }
+@media (prefers-reduced-motion: reduce) { .rs-track { animation: none; } .runner-slim { overflow-x: auto; } }
+@media (min-width: 901px) { .home .hero > .hero-main { padding-block: 36px 40px; } }
+@media (min-width: 901px) { .home .hero .hero-chat { display: none; } }
