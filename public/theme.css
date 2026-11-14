@@ -568,3 +568,8 @@ details.box summary { cursor: pointer; }
 section.s { padding-block: 56px; }
 .page-hero { padding: 56px 0 50px; }
 .svc-group { margin-top: 20px; }
+
+/* Logos with no white box: transparent PNGs; the footer uses the light version for the dark background */
+.logo-crop, .site-header .header-logo, .footer-signature .logo-crop { background: transparent !important; box-shadow: none !important; border-radius: 0; }
+.site-header .header-logo img, :root[data-theme=dark] .site-header .header-logo img { background: transparent !important; border-radius: 0; }
+.footer-signature .logo-crop { --w: 240px; }
