@@ -547,3 +547,24 @@ details.box summary { cursor: pointer; }
 /* readable line length for long text pages */
 .page-hero p { max-width: 62ch; }
 .legal-layout { max-width: 1480px !important; }
+
+/* ---------- Compact spacing: no forced full-screen sections, no big empty gaps ---------- */
+@media (min-width: 901px) {
+  html:has(body.home) { scroll-snap-type: none; }
+  .home section.s, .home .product-logo-section, .home .stats-band {
+    min-height: 0 !important; display: block !important; scroll-snap-align: none; scroll-margin-top: 108px;
+    padding-block: 56px !important;
+  }
+  .home .stats-band { padding-block: 40px !important; margin-top: 0; }
+  .home .stats-band .stat2 { padding: 24px 26px !important; }
+  .home .stats-band .stat2 b { font-size: clamp(2.6rem, 4vw, 3.4rem); }
+  .home .stats-band .stat2 span { font-size: 1.05rem; }
+  .home .stats-band .stats2 { gap: 20px; }
+  .home .site-footer { scroll-snap-align: none; }
+  /* hero stays one screen at most, but never taller than its content needs */
+  .home .hero > .hero-main { min-height: 0; padding-block: 44px 48px; }
+}
+/* tighter section rhythm on inner pages too */
+section.s { padding-block: 56px; }
+.page-hero { padding: 56px 0 50px; }
+.svc-group { margin-top: 20px; }
