@@ -573,3 +573,21 @@ section.s { padding-block: 56px; }
 .logo-crop, .site-header .header-logo, .footer-signature .logo-crop { background: transparent !important; box-shadow: none !important; border-radius: 0; }
 .site-header .header-logo img, :root[data-theme=dark] .site-header .header-logo img { background: transparent !important; border-radius: 0; }
 .footer-signature .logo-crop { --w: 240px; }
+
+/* ---------- Runner (scrolling ticker of software and services) ---------- */
+.runner-wrap { margin-top: 30px; display: grid; gap: 14px; padding: 18px 0; border-radius: 22px; background: linear-gradient(90deg, #eaf3fe, #e3f7f3 50%, #fff1d9); border: 1px solid var(--tint-line, rgba(31,77,87,.1)); overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.runner { overflow: hidden; }
+.runner-track { display: flex; width: max-content; gap: 14px; padding-right: 14px; animation: runner-left 42s linear infinite; }
+.runner-hw .runner-track { animation-name: runner-right; animation-duration: 48s; }
+.runner-wrap:hover .runner-track { animation-play-state: paused; }
+@keyframes runner-left { to { transform: translateX(-50%); } }
+@keyframes runner-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.runner-item { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; padding: 10px 20px 10px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--tint-line, rgba(31,77,87,.12)); box-shadow: 0 6px 16px rgba(31,77,87,.08); color: var(--text); font-weight: 700; font-size: .98rem; text-decoration: none; white-space: nowrap; transition: transform .2s, box-shadow .2s; }
+.runner-item:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(31,77,87,.16); }
+.runner-ic { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: 1.05rem; background: var(--surface-soft); overflow: hidden; }
+.rn-sw .runner-ic { background: #e4f0fd; padding: 2px; } .rn-sw .runner-ic img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+.rn-hw .runner-ic { background: #fff0da; }
+.rn-sw { border-left: 4px solid #4a8ff2; } .rn-hw { border-left: 4px solid #f39c2d; }
+@media (prefers-reduced-motion: reduce) { .runner-track { animation: none; } .runner { overflow-x: auto; } }
+@media (max-width: 600px) { .runner-item { font-size: .88rem; padding: 8px 16px 8px 10px; } .runner-track { animation-duration: 34s; } }

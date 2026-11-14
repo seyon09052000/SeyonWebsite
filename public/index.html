@@ -66,6 +66,10 @@
     <article class="both-card both-sw"><span class="both-ic" aria-hidden="true">🧠</span><h3>Software</h3><p>Billing, stock, admissions, fees, bookings, memberships and more, built for Indian businesses.</p><ul><li>School management</li><li>Shop and supermarket billing</li><li>Showroom and dealership management</li><li>Turf bookings and gym memberships</li></ul><a class="both-link" href="/products">Explore our software <span aria-hidden="true">→</span></a></article>
     <div class="both-plus" aria-hidden="true">+</div>
     <article class="both-card both-hw"><span class="both-ic" aria-hidden="true">🖥️</span><h3>Hardware and IT</h3><p>Laptops, desktops and parts, plus repair, setup and support, through our partner LapupTech.</p><ul><li>New and refurbished laptops and desktops</li><li>Custom gaming PCs and workstations</li><li>Repair, servicing and spare parts</li><li>Doorstep service and remote support</li></ul><a class="both-link" href="/services">Explore hardware and services <span aria-hidden="true">→</span></a></article>
+  </div>
+  <div class="runner-wrap" aria-label="Our software and services">
+    <div class="runner runner-sw" id="runnerSw" aria-hidden="true"></div>
+    <div class="runner runner-hw" id="runnerHw" aria-hidden="true"></div>
   </div></div></section>
 
 <section class="s" id="products"><div class="wrap"><div class="section-heading"><div><h2>Software built for the way your business actually runs.</h2><p class="sub">From daily operations to daily follow-ups, every product is designed to keep work clear and simple.</p></div><a class="directory-link" href="/products">View all products <span aria-hidden="true">↗</span></a></div><div class="grid" id="all"></div></div></section>
@@ -119,6 +123,9 @@ $('principles').innerHTML=site.principles.map(x=>`<div><div class="ic">${x.icon}
 initProductExplorer(products);
 // counters computed from real data only
 const cats=new Set(products.map(p=>p.category)),plats=new Set(products.flatMap(p=>p.platforms)),inds=new Set(products.flatMap(p=>p.industries||[]));
+(function(){const row=(items,cls)=>{const one=items.map(([ic,t,h])=>'<a class="runner-item '+cls+'" href="'+h+'" tabindex="-1"><span class="runner-ic">'+ic+'</span>'+esc(t)+'</a>').join('');return '<div class="runner-track">'+one+one+'</div>'};
+$('runnerSw').innerHTML=row(products.map(p=>['<img src="'+esc(p.logo)+'" alt="">',p.name+' · '+p.category,'/products/'+p.slug]),'rn-sw');
+$('runnerHw').innerHTML=row(SERVICES.map(([id,ic,t])=>[ic,t,'/services#'+id]),'rn-hw');})();
 $('stats2').innerHTML=[[products.length,'Purpose-built products'],[cats.size,'Product categories'],[inds.size,'Industries covered'],[plats.size,'Web & mobile platforms']].map(([n,l])=>`<div class="stat2"><b data-count="${n}">${n}</b><span>${esc(l)}</span></div>`).join('');
 $('all').innerHTML=products.map(card).join('');
 // product finder
