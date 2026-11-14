@@ -645,3 +645,9 @@ section.s { padding-block: 56px; }
 .rs-item::after { background: #1f4d57; }
 .rs-item:hover { color: #0f3b44; }
 .runner-slim { -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+
+/* No outline box around the logo; scroller is solid amber edge to edge (no white fade at either end) */
+.site-header .brand, .site-header .brand:focus, .site-header .brand:active, .site-header .brand:focus-visible,
+.site-header a.header-partner, .site-header a.header-partner:focus, .site-header a.header-partner:focus-visible,
+.footer-signature, .footer-signature:focus, .footer-signature:focus-visible { outline: none !important; box-shadow: none !important; border: 0 !important; }
+.runner-slim { -webkit-mask-image: none !important; mask-image: none !important; background: #f8a526 !important; }
