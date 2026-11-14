@@ -617,3 +617,24 @@ section.s { padding-block: 56px; }
 .rs-sw .rs-ic { box-shadow: 0 0 0 2px #7ee7ee; }
 .rs-hw .rs-ic { box-shadow: 0 0 0 2px #ffbf66; }
 .rs-sw .rs-ic img { padding: 2px; }
+
+/* ---------- Scroller: simple, neat, smooth ---------- */
+.runner-slim { background: #f4f9fb; border-bottom: 1px solid #dbe8ee; padding: 0; height: 38px; display: flex; align-items: center;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.rs-track { gap: 0; align-items: center; will-change: transform; backface-visibility: hidden; transform: translate3d(0, 0, 0); animation: rs-smooth 70s linear infinite; }
+@keyframes rs-smooth { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+.rs-item, .rs-sw, .rs-hw { background: none; border: 0; box-shadow: none; backdrop-filter: none; text-shadow: none; padding: 0 22px 0 0; gap: 8px; color: #1d3340; font-size: .86rem; font-weight: 600; position: relative; transition: color .2s; }
+.rs-item::after { content: ''; position: absolute; right: 8px; top: 50%; width: 4px; height: 4px; margin-top: -2px; border-radius: 50%; background: #f39c2d; }
+.rs-item:hover { color: #0f6f7b; transform: none; background: none; }
+.rs-ic, .rs-sw .rs-ic, .rs-hw .rs-ic { width: 18px; height: 18px; background: none !important; box-shadow: none; font-size: .95rem; }
+.rs-sw .rs-ic img { padding: 0; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { .rs-track { animation: none; } }
+
+/* Scroller: clearer and easier to read */
+.runner-slim { height: 46px; background: #ffffff; border-bottom: 2px solid #e3eef3; }
+.rs-item, .rs-sw, .rs-hw { color: #0b2530; font-size: 1rem; font-weight: 700; padding-right: 30px; gap: 10px; }
+.rs-item::after { right: 12px; width: 6px; height: 6px; margin-top: -3px; background: #f39c2d; }
+.rs-ic, .rs-sw .rs-ic, .rs-hw .rs-ic { width: 24px; height: 24px; font-size: 1.2rem; }
+.rs-item:hover { color: #0f6f7b; }
+.runner-slim { -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); }
+@media (max-width: 600px) { .runner-slim { height: 42px; } .rs-item { font-size: .92rem; } }
