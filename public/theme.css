@@ -662,3 +662,12 @@ section.s { padding-block: 56px; }
 .rs-sw .rs-ic .product-symbol[data-product=invoicely] img { position: absolute; width: 379.31%; height: auto; max-width: none; left: -12.07%; top: -12.07%; object-fit: initial; border-radius: 0; }
 .rs-sw .rs-ic .product-symbol[data-product=motorhub] img { position: absolute; width: 423.08%; height: auto; max-width: none; left: -18.27%; top: -16.92%; object-fit: initial; border-radius: 0; }
 .rs-sw .rs-ic .product-symbol[data-product=zenfit] img { position: absolute; width: 225.99%; height: auto; max-width: none; left: -6.21%; top: -5.65%; object-fit: initial; border-radius: 0; }
+
+/* ---------- Scroller: headline, then Software, then Hardware / IT services with details ---------- */
+.rs-lead { flex: 0 0 auto; display: inline-flex; align-items: center; padding: 0 26px 0 18px; font-weight: 800; font-size: 1.02rem; color: #fff; background: #1f4d57; align-self: stretch; white-space: nowrap; letter-spacing: .01em; }
+.rs-label { flex: 0 0 auto; display: inline-flex; align-items: center; margin: 0 22px 0 6px; padding: 3px 14px; border-radius: 999px; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; background: #1f4d57; color: #fff; }
+.rs-l-sw { background: #1f4d57; } .rs-l-hw { background: #7a3d00; }
+.rs-item small { font-weight: 600; font-size: .8rem; color: rgba(43,23,0,.78); margin-left: 2px; }
+.rs-item small::before { content: '· '; }
+.rs-track { align-items: stretch; }
+.rs-item { align-self: center; }

@@ -121,7 +121,12 @@ $('principles').innerHTML=site.principles.map(x=>`<div><div class="ic">${x.icon}
 initProductExplorer(products);
 // counters computed from real data only
 const cats=new Set(products.map(p=>p.category)),plats=new Set(products.flatMap(p=>p.platforms)),inds=new Set(products.flatMap(p=>p.industries||[]));
-(function(){const sw=products.map(p=>[productLogoMarkup(p),p.name,'/products/'+p.slug,'sw']),hw=SERVICES.map(([id,ic,t])=>[ic,t,'/services#'+id,'hw']);const all=[];for(let i=0;i<Math.max(sw.length,hw.length);i++){if(sw[i])all.push(sw[i]);if(hw[i])all.push(hw[i]);if(hw[i+sw.length])all.push(hw[i+sw.length])}const seen=new Set(),list=all.filter(x=>!seen.has(x[1])&&seen.add(x[1]));const one=list.map(([ic,t,h,k])=>'<a class="rs-item rs-'+k+'" href="'+h+'" tabindex="-1"><span class="rs-ic">'+ic+'</span>'+esc(t)+'</a>').join('');$('runnerSlim').innerHTML='<div class="rs-track" aria-hidden="true">'+one+one+'</div>';})();
+(function(){const A=(h,ic,t,k,d)=>'<a class="rs-item rs-'+k+'" href="'+h+'" tabindex="-1"><span class="rs-ic">'+ic+'</span>'+esc(t)+(d?'<small>'+esc(d)+'</small>':'')+'</a>',L=(t,k)=>'<span class="rs-label rs-l-'+k+'">'+esc(t)+'</span>',first=(s)=>String(s||'').split(/[.;]/)[0].slice(0,60);
+const grp=(g)=>SERVICES.filter(x=>x[4]===g),G=window.SERVICE_GROUPS||{hardware:'Hardware',service:'IT services'};
+let h='<span class="rs-lead">Software and hardware, from one team</span>'+L('Software','sw')+products.map(p=>A('/products/'+p.slug,productLogoMarkup(p),p.name,'sw',p.category)).join('');
+for(const g of Object.keys(G)){const items=grp(g);if(items.length)h+=L(G[g],'hw')+items.map(([id,ic,t,d])=>A('/services#'+id,ic,t,'hw',first(d))).join('')}
+const one=h;$('runnerSlim').innerHTML='<div class="rs-track" aria-hidden="true">'+one+one+'</div>';
+const tr=document.querySelector('#runnerSlim .rs-track');requestAnimationFrame(()=>{tr.style.animationDuration=Math.max(30,Math.round(tr.scrollWidth/2/70))+'s'})})();
 $('stats2').innerHTML=[[products.length,'Purpose-built products'],[cats.size,'Product categories'],[inds.size,'Industries covered'],[plats.size,'Web & mobile platforms']].map(([n,l])=>`<div class="stat2"><b data-count="${n}">${n}</b><span>${esc(l)}</span></div>`).join('');
 $('all').innerHTML=products.map(card).join('');
 // product finder
