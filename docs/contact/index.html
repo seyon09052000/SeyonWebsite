@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>window.SEYON_STATIC=true</script><script>document.documentElement.dataset.theme='light'</script><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact Seyon Solutions | Book a Demo or Ask a Question</title><meta name="description" content="Call, WhatsApp or send an enquiry to Seyon Solutions to book a free demo or ask about our software.">
+<meta property="og:title" content="Contact Seyon Solutions"><meta property="og:description" content="Call, WhatsApp or write to us to book a free demo.">
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/premium.css"><link rel="stylesheet" href="/ios.css"><link rel="stylesheet" href="/screens.css"><link rel="stylesheet" href="/color.css"><link rel="stylesheet" href="/bg.css"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/theme.css"></head><body>
+<div id="nav"></div><main id="main-content"><section class="page-hero"><div class="wrap"><span class="eyebrow">Get in touch</span><h1>Contact us</h1><p>Call or WhatsApp us. We will set up a walkthrough with your own business in mind.</p></div></section>
+<section class="s sec-contact"><div class="wrap two"><div><h2 style="margin-top:0">Talk to our team</h2>
+<div class="contacts" id="contacts"></div><div class="btns"><a class="btn call" id="callMain">📞 Call us: <span id="callNum"></span></a><a class="btn wa" id="waMain" target="_blank" rel="noopener">💬 WhatsApp: <span id="waNum"></span></a></div>
+<p class="note" style="margin-top:12px">Phone numbers are Indian numbers (+91).</p>
+<p class="sub" id="mail" hidden style="margin-top:8px"></p></div>
+<div><div class="box" style="text-align:center"><h3 style="margin-top:0">Prefer to write to us?</h3><p class="sub" style="margin-bottom:16px">Tell us what you run and what you want to improve.</p>
+<div class="btns" style="justify-content:center"><button type="button" class="btn primary" data-enquiry="demo">Book a free demo</button><button type="button" class="btn" data-enquiry="question">Ask a question</button></div></div></div></div></section></main>
+<div id="foot"></div><script src="/app.js"></script>
+<script>(async()=>{await layout('contact');const {site}=await catalog();const $=id=>document.getElementById(id);
+$('contacts').innerHTML=site.contacts.map(c=>`<a href="${telHref(c.phone)}"><span>${esc(c.name)}</span><b>${esc(c.phone)}</b></a>`).join('');$('waMain').href=waLink(site,'Hello, I would like to know more about your software.');$('waNum').textContent=site.whatsapp_display;$('callMain').href=telHref(site.whatsapp_display);$('callNum').textContent=site.whatsapp_display;
+if(site.contact_email){$('mail').hidden=false;$('mail').innerHTML='Email: <a href="mailto:'+esc(site.contact_email)+'">'+esc(site.contact_email)+'</a>';}})();</script></body></html>

@@ -29,7 +29,8 @@ const PRODUCT_ART_SCREENS = {
 
 let _catalog;
 async function catalog() {
-  if (!_catalog) { const r = await fetch('/api/catalog'); _catalog = await r.json(); }
+  // The static GitHub Pages build ships the same data as a plain file (window.SEYON_STATIC is set by the build).
+  if (!_catalog) { const r = await fetch(window.SEYON_STATIC ? '/api/catalog.json' : '/api/catalog'); _catalog = await r.json(); }
   return _catalog;
 }
 

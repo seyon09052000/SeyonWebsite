@@ -1,0 +1,124 @@
+/* ===================== iOS design language =====================
+   Apple system colours, SF-style type, translucent "material" bars,
+   grouped rounded cards, pill buttons. Follows the device light/dark setting. */
+@font-face{
+  font-family:"DM Sans";
+  font-style:normal;
+  font-weight:400 800;
+  font-display:swap;
+  src:url("/assets/fonts/dm-sans-latin.woff2") format("woff2");
+}
+
+:root{
+  --bg:#f2f2f7;--bg2:#ffffff;--card:#ffffff;--text:#000000;--muted:#34343b;--line:rgba(60,60,67,.18);
+  --accent:#007aff;--accent2:#007aff;--glow:rgba(0,122,255,.10);--nav:rgba(249,249,249,.78);
+  --fill:rgba(120,120,128,.12);--green:#34c759;--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+  --grad:#007aff;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#000000;--bg2:#1c1c1e;--card:#1c1c1e;--text:#ffffff;--muted:#98989f;--line:rgba(84,84,88,.55);
+  --accent:#0a84ff;--accent2:#0a84ff;--glow:rgba(10,132,255,.16);--nav:rgba(28,28,30,.72);
+  --fill:rgba(120,120,128,.24);--green:#30d158;--shadow:none;--grad:#0a84ff}}
+:root[data-theme=dark]{
+  --bg:#000000;--bg2:#1c1c1e;--card:#1c1c1e;--text:#ffffff;--muted:#98989f;--line:rgba(84,84,88,.55);
+  --accent:#0a84ff;--accent2:#0a84ff;--glow:rgba(10,132,255,.16);--nav:rgba(28,28,30,.72);
+  --fill:rgba(120,120,128,.24);--green:#30d158;--shadow:none;--grad:#0a84ff}
+:root[data-theme=light]{
+  --bg:#f2f2f7;--bg2:#ffffff;--card:#ffffff;--text:#000000;--muted:#34343b;--line:rgba(60,60,67,.18);
+  --accent:#007aff;--accent2:#007aff;--glow:rgba(0,122,255,.10);--nav:rgba(249,249,249,.78);
+  --fill:rgba(120,120,128,.12);--green:#34c759;--shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);--grad:#007aff}
+
+html{-webkit-text-size-adjust:100%}
+body{font-family:"DM Sans","Segoe UI",Arial,sans-serif;
+  font-size:17px;font-weight:500;line-height:1.6;letter-spacing:0;-webkit-font-smoothing:antialiased;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font-family:inherit}
+strong,b{font-weight:800}
+body:before{background:var(--bg)!important}
+
+/* quiet down the glow layer */
+.orb,.hero:before,.hero-vis:after,.card:after{display:none!important}
+.hero{background:none;padding:64px 0 24px}
+.gt{background:none!important;-webkit-text-fill-color:currentColor;color:var(--accent);animation:none}
+.progress{height:2px;background:var(--accent)}
+
+/* Navigation bar: translucent material */
+nav.top{background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--line)}
+nav.top .wrap{height:56px}
+nav.top .links a{border-radius:99px;color:var(--text);font-weight:700;font-size:.95rem;padding:7px 14px}
+nav.top .links a:hover{background:var(--fill)}nav.top .links a.on{background:var(--fill);color:var(--text)}
+.icon-btn{background:var(--fill);border:0;border-radius:99px;color:var(--text);padding:7px 14px;font-weight:700}
+kbd{display:none}
+
+/* Large titles */
+h1,h2,h3,h4,h5,h6{font-weight:800;color:inherit}
+h1,.hero h1{font-weight:800;letter-spacing:-.035em;line-height:1.1}
+.hero h1{font-size:clamp(2.4rem,6vw,4rem);max-width:16ch}
+h2{font-size:clamp(1.7rem,3.4vw,2.25rem);font-weight:800;letter-spacing:-.025em;line-height:1.2;margin-bottom:16px}
+h3{letter-spacing:-.02em}
+.sub,.hero p.lead{color:var(--muted)}.hero p.lead{font-size:1.2rem;font-weight:500}
+
+/* Buttons: pill, filled + tinted */
+.btn{border-radius:980px;border:0;background:var(--fill);color:var(--accent);font-weight:700;padding:12px 22px;font-size:1rem;box-shadow:none}
+.btn:hover{filter:none;background:var(--glow);transform:none}.btn:active{transform:scale(.97);opacity:.85}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:none}.btn.primary:hover{background:var(--accent);filter:brightness(1.08);transform:none;box-shadow:none}
+.btn.wa{background:var(--green);color:#fff}
+.wa-float{background:var(--green);color:#fff;border-radius:980px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.eyebrow{background:var(--fill);border:0;color:var(--muted)}
+
+/* Cards: grouped, rounded, no glow */
+.card,.box,.stat2,.stat,.quote,.hl>div,.feat li,.callouts li,.contacts a,.rec,.mq{background:var(--card);border:0;box-shadow:var(--shadow)}
+:root[data-theme=dark] .card,:root[data-theme=dark] .box,:root[data-theme=dark] .quote,:root[data-theme=dark] .hl>div{box-shadow:none}
+.card{border-radius:22px}.box,.rec,.quote,.hl>div{border-radius:22px}.feat li,.callouts li,.contacts a,.stat2{border-radius:16px}
+.card:hover{box-shadow:var(--shadow);border:0}.card:active{transform:scale(.985)!important}
+.card .shot{background:var(--bg);border-bottom:.5px solid var(--line)}
+.card .go{color:var(--accent);font-weight:600}.card:hover .go{letter-spacing:0}
+.hl>div:before{display:none}.hl>div:hover{transform:none;box-shadow:var(--shadow);border:0}
+.hl .ic{background:var(--glow);border-radius:12px}
+.quote{background:var(--card)}.quote:before{color:var(--accent)}
+.stat2 b{background:none!important;-webkit-text-fill-color:currentColor;color:var(--text);font-weight:700}
+.feat li:before{color:var(--accent)}.feat li:hover{transform:none}
+.feat li,.callouts li{color:var(--text);font-size:1.02rem;font-weight:600;line-height:1.6}
+.feat li,.feat.big li{padding:16px 18px 16px 49px}
+.callouts li:before{background:var(--accent)}
+section.alt{background:none;border:0}
+section.s{padding:48px 0}
+
+/* Status badges: tinted capsules */
+.badge{border-radius:99px;font-weight:700;letter-spacing:0}
+.chip{background:var(--fill);border:0;color:var(--muted);border-radius:99px;font-weight:600}
+.pill{background:var(--card);border:0}
+
+/* Segmented-style chips for the finder */
+.chips{background:var(--fill);padding:3px;border-radius:12px;display:inline-flex;flex-wrap:wrap;gap:2px}
+.chipbtn{background:transparent;border:0;border-radius:10px;color:var(--text);font-weight:700;padding:8px 16px;transform:none!important}
+.chipbtn:hover{background:rgba(120,120,128,.12)}
+.chipbtn.on{background:var(--bg2);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.18);font-weight:600}
+:root[data-theme=dark] .chipbtn.on{background:#636366}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .chipbtn.on{background:#636366}}
+.rec{background:var(--card)}
+
+/* Inputs: filled, no border */
+input,select,textarea{background:var(--fill);border:0;border-radius:12px;padding:12px 14px;font-size:1rem;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:0}
+label{color:var(--text);font-size:.85rem;font-weight:700;text-transform:none}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
+summary,th{font-weight:700}
+.hp{position:absolute;left:-9999px}
+
+/* Marquee + palette in iOS material */
+.mq{border-radius:99px}
+.pal{background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.pal-box{background:var(--bg2);border:0;border-radius:20px}
+.pal-box input{background:transparent;border-radius:0;border-bottom:.5px solid var(--line)}
+.pal-box li.on,.pal-box li:hover{background:var(--fill)}
+
+/* Tables / footer */
+th,td{border-bottom:.5px solid var(--line)}
+footer{border-top:.5px solid var(--line);color:var(--muted)}
+.clogo{border:0;box-shadow:0 0 0 .5px var(--line);border-radius:12px;background:#fff}
+.phead img.logo{border:0;box-shadow:0 0 0 .5px var(--line);border-radius:22px;background:#fff}
+.logo-crop{border-radius:10px;box-shadow:0 0 0 .5px var(--line)}.lt{border-radius:10px;box-shadow:0 0 0 .5px var(--line)}
+
+/* Product-page device frames keep their own look; soften shadow */
+.mk{box-shadow:0 18px 44px rgba(0,0,0,.22)}
+.mk .dot{background:var(--accent);box-shadow:0 0 0 4px var(--glow)}

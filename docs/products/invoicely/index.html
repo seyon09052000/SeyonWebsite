@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>window.SEYON_STATIC=true</script><script>document.documentElement.dataset.theme='light'</script><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Invoicely — Multi-shop billing software</title><meta name="description" content="Billing and stock software where every shop's bills, stock and settings are stored by shop. A super admin creates shops, and each shop signs in to its own "><link rel="canonical" href="https://www.seyonsolutions.lapuptech.com/products/invoicely">
+<meta property="og:type" content="website"><meta property="og:title" content="Invoicely"><meta property="og:description" content="Multi-shop billing software"><meta property="og:image" content="https://www.seyonsolutions.lapuptech.com/assets/products/invoicely/invoice-preview.svg">
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/premium.css"><link rel="stylesheet" href="/ios.css"><link rel="stylesheet" href="/screens.css"><link rel="stylesheet" href="/color.css"><link rel="stylesheet" href="/bg.css"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/theme.css"></head><body>
+<div id="nav"></div><main id="main"><div class="wrap"><p class="sub" style="padding:60px 0">Loading…</p></div></main><div id="foot"></div>
+<script src="/app.js"></script><script src="/screens.js"></script>
+<script>
+(async()=>{await layout('products');const {products,site}=await catalog();
+const slug=location.pathname.split('/').pop();const p=products.find(x=>x.slug===slug);
+const m=document.getElementById('main');
+if(!p){document.title='Product not found';m.innerHTML='<div class="wrap"><div class="empty" style="margin:60px 0">Product not found. <a href="/products">Back to all products</a></div></div>';return;}
+m.style.setProperty('--product-accent',p.accent||'#087f8c');
+document.title=`${p.name} — ${p.tagline}`;const set=(s,v)=>document.querySelector(s).setAttribute('content',v);
+set('meta[name=description]',p.overview.slice(0,155));set('meta[property="og:title"]',p.name);set('meta[property="og:description"]',p.tagline);
+set('meta[property="og:image"]',location.origin+(p.artwork||p.screenshots[0]?.src||p.logo));document.querySelector('link[rel=canonical]').href=location.origin+'/products/'+p.slug;
+const ok=u=>/^(https?:\/\/|\/assets\/)/i.test(u||'');
+const st=p.status,launched=st==='live',beta=st==='public_beta'||st==='private_beta',upcoming=st==='coming_soon'||st==='in_development';
+// Only real, filled-in links produce buttons.
+let acts=[];
+if(launched||st==='public_beta'){ if(ok(p.app_url))acts.push(`<a class="btn primary" href="${esc(p.app_url)}" target="_blank" rel="noopener">Launch app</a>`);
+  if(ok(p.download_url))acts.push(`<a class="btn" href="${esc(p.download_url)}" target="_blank" rel="noopener">Download</a>`);}
+if(ok(p.demo_url))acts.push(`<a class="btn primary" href="${esc(p.demo_url)}" target="_blank" rel="noopener">Try demo <span aria-hidden="true">→</span></a>`);
+acts.push(`<a class="btn wa" href="${waLink(site,'Hello, I would like to know more about '+p.name+'.')}" target="_blank" rel="noopener">💬 WhatsApp</a>`);
+if(ok(p.docs_url))acts.push(`<a class="btn" href="${esc(p.docs_url)}" target="_blank" rel="noopener">${esc(p.docs_label||"Documentation")}</a>`);
+const eqType=beta?'beta':upcoming?'waitlist':'demo';acts.push(`<button type="button" class="btn ${acts.length?'':'primary'}" data-enquiry="${eqType}" data-product="${esc(p.slug)}">${beta?'Request beta access':upcoming?'Get notified':'Try demo'}</button>`);
+const list=(t,a)=>a&&a.length?`<section class="s"><div class="wrap"><h2>${t}</h2><ul class="feat">${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>`:'';
+const related=products.filter(x=>x.slug!==p.slug&&x.category===p.category);
+const side=`<div class="box" style="text-align:center"><h3 style="margin-top:0">Interested in ${esc(p.name)}?</h3><p class="sub" style="margin-bottom:16px">${upcoming?'Join the waitlist and we will tell you when it launches.':beta?'Ask for beta access and we will be in touch.':'Book a free demo or ask us anything.'}</p><div class="btns" style="justify-content:center"><button type="button" class="btn primary" data-enquiry="${eqType}" data-product="${esc(p.slug)}">${beta?'Request beta access':upcoming?'Get notified':'Book a free demo'}</button><button type="button" class="btn" data-enquiry="question" data-product="${esc(p.slug)}">Ask a question</button></div></div>`;
+const detailScreen=p.screens?.find(s=>s.kind===PRODUCT_ART_SCREENS[p.slug])||p.screens?.[0];
+const detailVisual=p.artwork?`<img class="product-artwork product-detail-artwork" src="${esc(p.artwork)}" alt="${esc(productArtworkAlt(p))}" decoding="async">`:detailScreen?screenHTML(p,detailScreen):mock(p);
+m.innerHTML=`<div class="wrap"><div class="phead"><img class="logo" src="${esc(p.logo)}" alt="${esc(p.name)} logo"><div>
+  <div class="row"><h1>${esc(p.name)}</h1>${badge(st)}</div><p class="sub" style="margin:4px 0 0">${esc(p.tagline)}</p></div></div>
+  ${st==='draft'?'<p class="chip" style="display:inline-block">Launch status for this product has not been confirmed yet.</p>':''}
+  ${upcoming?'<p class="chip" style="display:inline-block">Planned features may change before release.</p>':''}
+  ${p.launch_date?`<p class="chip" style="display:inline-block">Launch: ${esc(p.launch_date)}</p>`:''}
+  <div class="btns" style="margin:16px 0 28px">${acts.join('')}</div>
+  </div>
+<section class="s alt"><div class="wrap"><div class="show"><div class="product-visual product-art-${esc(p.slug)}">${detailVisual}<p class="note" style="margin-top:10px;text-align:center">${p.artwork?esc(productArtworkNote(p)):'Illustrative screen using product sample data.'}</p></div>
+  <div><h2>At a glance</h2><p class="sub">What you see on a typical screen.</p><ol class="callouts">${(p.mock?.callouts||[]).map(c=>`<li>${esc(c)}</li>`).join('')}</ol></div></div></div></section>
+<div class="wrap" style="display:none"></div>
+<section class="s"><div class="wrap two"><div><h2>Overview</h2><p>${esc(p.overview)}</p>
+  <p><b>Platforms:</b> ${p.platforms.map(esc).join(', ')}<br><b>Category:</b> ${esc(p.category)}${p.industries?.length?`<br><b>Built for:</b> ${p.industries.map(esc).join(', ')}`:''}</p>
+  ${p.requirements?`<p><b>Requirements:</b> ${esc(p.requirements)}</p>`:''}${p.pricing_info?`<p><b>Pricing:</b> ${esc(p.pricing_info)}</p>`:''}</div>
+  <div id="contact">${side}</div></div></section>
+${featureTour(p)}
+${p.screenshots?.length?`<section class="s"><div class="wrap"><h2>Screenshots</h2><p class="sub">Real screens from ${esc(p.name)}, shown with sample data. Tap an image to enlarge.</p><div class="gallery">${p.screenshots.map(s=>`<img src="${esc(s.src)}" alt="${esc(s.alt||p.name+' screenshot')}" loading="lazy" decoding="async">`).join('')}</div></div></section>`:''}
+${p.highlights?.length?`<section class="s alt"><div class="wrap"><h2>Highlights</h2><p class="sub">Why teams choose ${esc(p.name)}.</p><div class="hl">${p.highlights.map(h=>`<div><div class="ic">${h[0]}</div><h3>${esc(h[1])}</h3><p>${esc(h[2])}</p></div>`).join('')}</div></div></section>`:''}
+${list(upcoming?'Planned features':'Everything included',p.features).replace('class="feat"','class="feat big"')}
+${p.faqs?.length?`<section class="s"><div class="wrap"><h2>FAQ</h2>${p.faqs.map(f=>`<details class="box" style="margin-bottom:8px"><summary><b>${esc(f.q)}</b></summary><p>${esc(f.a)}</p></details>`).join('')}</div></section>`:''}
+${related.length?`<section class="s alt"><div class="wrap"><h2>Related products</h2><div class="grid">${related.map(card).join('')}</div></div></section>`:''}`;
+})();
+</script></body></html>

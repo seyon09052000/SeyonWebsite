@@ -1,0 +1,60 @@
+/* Sections share the logo's teal, orange, and neutral palette. */
+body::before { background: linear-gradient(180deg, var(--bg), var(--surface-soft) 55%, var(--bg)) !important; }
+.hero .wrap { position: relative; z-index: 1; }
+#products { background: linear-gradient(180deg, var(--bg), var(--surface-soft)); }
+#find { background: linear-gradient(135deg, var(--surface-soft), var(--bg)); }
+#find .rec { background: var(--card); box-shadow: 0 12px 36px var(--glow); }
+section.alt { background: linear-gradient(180deg, var(--surface-soft), var(--bg)); }
+.sec-vision {
+  position: relative; overflow: hidden; color: #f5fafb;
+  background: radial-gradient(ellipse at 90% 10%, #1b6569, transparent 60%),
+    linear-gradient(135deg, #102b33, #173c43) !important;
+  padding-block: 72px !important;
+}
+.sec-vision .wrap { position: relative; }
+.sec-vision .vision blockquote { color: #f5fafb; -webkit-text-fill-color: currentColor; background: none; }
+.sec-vision h3 { color: #f5fafb; }
+.sec-vision #mission { color: #cee2e5 !important; font-size: 1.05rem; }
+.sec-vision .chip { color: #dcf6f6; background: #ffffff12; }
+.sec-vision .hl > div { background: var(--card); color: var(--text); }
+.sec-vision .hl > div h3 { color: var(--text); }
+.sec-vision .hl p { color: var(--muted); }
+.sec-quotes { background: linear-gradient(135deg, var(--surface-warm), var(--bg)); }
+.sec-contact { background: linear-gradient(135deg, var(--surface-soft), var(--bg)); }
+.sec-contact .box { background: var(--card); }
+.phead { background: linear-gradient(135deg, color-mix(in srgb, var(--product-accent, var(--brand)) 10%, var(--card)), var(--surface-soft)); border-radius: 28px; padding: 28px; margin-top: 20px; }
+.phead img.logo { box-shadow: 0 8px 24px var(--glow); }
+main > section.s:nth-of-type(odd) { background: linear-gradient(180deg, transparent, var(--surface-soft)); }
+footer { background: #102b33; color: #c6dade; border: 0; }
+footer a, footer b { color: #f5fafb; }
+/* footer without the brand column */
+.footer-top{grid-template-columns:minmax(250px,1fr) auto!important;justify-content:space-between}
+@media(max-width:700px){.footer-top{grid-template-columns:1fr!important}}
+
+/* Section colours: soft tints from the logo palette so the page has rhythm instead of one flat tone. */
+:root, :root[data-theme=light] {
+  --tint-mint: #e3f4f2; --tint-warm: #fff1dd; --tint-sky: #e5f0f8; --tint-white: #ffffff;
+  --tint-line: rgba(31, 77, 87, 0.10);
+}
+:root[data-theme=dark] {
+  --tint-mint: #0f2a2d; --tint-warm: #1f1b15; --tint-sky: #11222e; --tint-white: #0b1a20;
+  --tint-line: rgba(143, 231, 232, 0.10);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    --tint-mint: #0f2a2d; --tint-warm: #1f1b15; --tint-sky: #11222e; --tint-white: #0b1a20;
+    --tint-line: rgba(143, 231, 232, 0.10);
+  }
+}
+body section.product-logo-section { background: var(--tint-white); }
+body section#products { background: linear-gradient(180deg, var(--tint-sky), var(--tint-warm) 70%, var(--tint-warm)); }
+body section#find { background: var(--tint-mint); border-block: 1px solid var(--tint-line); }
+body section.sec-proof { background: var(--tint-white); }
+body section.sec-trust { background: linear-gradient(180deg, var(--tint-white), var(--tint-warm)); }
+body section.sec-quotes { background: linear-gradient(180deg, var(--tint-warm), var(--tint-sky)); }
+body section.sec-contact { background: linear-gradient(135deg, var(--tint-mint), var(--tint-sky)); border-top: 1px solid var(--tint-line); }
+body section.sec-contact .box, body section#find .rec { background: var(--card); border: 1px solid var(--tint-line); }
+body .proof-item, body .trust-card { background: var(--card); border-color: var(--tint-line); backdrop-filter: none; }
+/* Secondary buttons: readable teal outline instead of pale cyan text */
+html .btn:not(.primary):not(.wa):not(.hero-secondary) { background: var(--card); color: var(--brand); border: 1.5px solid color-mix(in srgb, var(--brand) 32%, transparent); }
+html .btn:not(.primary):not(.wa):not(.hero-secondary):hover { background: color-mix(in srgb, var(--brand) 9%, var(--card)); border-color: var(--brand); }

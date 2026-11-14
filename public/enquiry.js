@@ -76,8 +76,23 @@
       }
       const btn = form.querySelector('button[type=submit]'); btn.disabled = true; msg.className = 'eq-msg'; msg.textContent = 'Sending…';
       try {
-        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        const j = await r.json(); if (!r.ok) throw new Error(j.error || 'Something went wrong.');
+        let j = {};
+        if (window.SEYON_STATIC) {
+          // Static hosting has no server: send to the configured form service, or hand over to WhatsApp.
+          if (body.website) throw new Error('Please try again.');            // honeypot
+          const { site, products } = await catalog();
+          const pname = body.product === 'hardware' ? 'Hardware, repair and IT services' : ((products.find((p) => p.slug === body.product) || {}).name || body.product);
+          const lines = [`New ${type === 'waitlist' ? 'waitlist sign-up' : (body.type || type) + ' enquiry'} - ${pname}`, body.name ? `Name: ${body.name}` : '', `Email: ${body.email}`, body.service ? `Service: ${body.service}` : '', body.message ? `Message: ${body.message}` : ''].filter(Boolean);
+          if (site.form_endpoint) {
+            const r = await fetch(site.form_endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ ...body, product_name: pname, _subject: lines[0] }) });
+            if (!r.ok) throw new Error('Could not send right now. Please use WhatsApp or call us.');
+          } else {
+            j.wa = waLink(site, lines.join('\n'));
+          }
+        } else {
+          const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+          j = await r.json(); if (!r.ok) throw new Error(j.error || 'Something went wrong.');
+        }
         window.seyonAnalytics && window.seyonAnalytics.track('lead_submitted', {
           type,
           product: body.product || null,
@@ -87,9 +102,9 @@
           ? 'Our team will contact you to discuss the product and what you would like to see.'
           : 'We have received your request and will contact you soon.';
         card.innerHTML = `<button class="eq-x" type="button" aria-label="Close">✕</button><div class="eq-done"><div class="tick">✓</div>
-          <h3>${j.duplicate ? 'You are already on the list' : 'Thank you!'}</h3><p>${j.duplicate ? 'We already have your email for this product.' : completion}</p>
-          <div class="eq-actions"><button class="btn primary" type="button">Done</button></div></div>`;
-        card.querySelector('.eq-x').onclick = closeEnquiry; card.querySelector('.btn').onclick = closeEnquiry; card.querySelector('.btn').focus();
+          <h3>${j.wa ? 'One last step' : j.duplicate ? 'You are already on the list' : 'Thank you!'}</h3><p>${j.wa ? 'Tap the button to send your details to our team on WhatsApp. Your message is already written for you.' : j.duplicate ? 'We already have your email for this product.' : completion}</p>
+          <div class="eq-actions">${j.wa ? `<a class="btn wa" href="${esc(j.wa)}" target="_blank" rel="noopener">💬 Send on WhatsApp</a>` : ''}<button class="btn ${j.wa ? '' : 'primary'}" type="button" data-done>${j.wa ? 'Close' : 'Done'}</button></div></div>`;
+        const doneBtn = card.querySelector('[data-done]'); card.querySelector('.eq-x').onclick = closeEnquiry; doneBtn.onclick = closeEnquiry; (card.querySelector('.wa') || doneBtn).focus();
       } catch (err) { btn.disabled = false; bad(err.message); }
     };
     // keep focus inside the dialog
