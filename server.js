@@ -7,9 +7,19 @@ const crypto = require('crypto');
 const PORT = process.env.PORT || 4000;
 const ROOT = __dirname;
 const PUB = path.join(ROOT, 'public');
-const DATA = path.join(ROOT, 'data');
+// DATA_DIR lets a host keep editable data (products, enquiries, backups) on a permanent disk, outside the code folder.
+const DATA = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(ROOT, 'data');
 const SUBS = path.join(DATA, 'submissions');
 fs.mkdirSync(SUBS, { recursive: true });
+// First start on a fresh disk: copy the default content from the code folder (never overwrites existing data).
+for (const f of ['products.json', 'site.json', 'services.json']) {
+  const dst = path.join(DATA, f), src = path.join(ROOT, 'data', f);
+  if (!fs.existsSync(dst) && fs.existsSync(src)) fs.copyFileSync(src, dst);
+}
+const PROD = process.env.NODE_ENV === 'production';
+// Behind a host's proxy the real visitor address and the https scheme come from forwarded headers.
+const TRUST_PROXY = !!process.env.TRUST_PROXY || PROD;
+const siteOrigin = (req) => `${TRUST_PROXY ? String(req.headers['x-forwarded-proto'] || 'http').split(',')[0].trim() : 'http'}://${req.headers.host}`;
 
 // Admin password: ADMIN_PASSWORD env, else a random one saved in data/.admin-password
 let ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
@@ -43,7 +53,7 @@ const subFile = (n) => path.join(SUBS, n + '.json');
 const readSubs = (n) => (fs.existsSync(subFile(n)) ? readJSON(subFile(n)) : []);
 
 const send = (res, code, body, type = 'application/json') => {
-  res.writeHead(code, { 'Content-Type': type, 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin' });
+  res.writeHead(code, { 'Content-Type': type, 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'same-origin', 'X-Frame-Options': 'SAMEORIGIN', ...(PROD ? { 'Strict-Transport-Security': 'max-age=15552000' } : {}) });
   res.end(typeof body === 'string' || Buffer.isBuffer(body) ? body : JSON.stringify(body));
 };
 const body = (req) => new Promise((ok, bad) => {
@@ -83,12 +93,12 @@ function notify(text) {
 }
 
 // Copy data/ to backups/<timestamp>/ on start and every 24h; keep the newest 14.
-const BACKUPS = path.join(ROOT, 'backups');
+const BACKUPS = process.env.DATA_DIR ? path.join(DATA, 'backups') : path.join(ROOT, 'backups');
 function backup() {
   try {
     const dest = path.join(BACKUPS, new Date().toISOString().replace(/[:.]/g, '-'));
     fs.mkdirSync(dest, { recursive: true });
-    fs.cpSync(DATA, dest, { recursive: true, filter: (src) => path.basename(src) !== '.admin-password' });
+    fs.cpSync(DATA, dest, { recursive: true, filter: (src) => path.basename(src) !== '.admin-password' && !src.startsWith(BACKUPS) });
     const all = fs.readdirSync(BACKUPS).sort();
     for (const old of all.slice(0, Math.max(0, all.length - 14))) fs.rmSync(path.join(BACKUPS, old), { recursive: true, force: true });
   } catch (e) { console.error('backup failed:', e.message); }
@@ -101,7 +111,7 @@ http.createServer(async (req, res) => {
   const p = decodeURIComponent(url.pathname);
   // Old VidyaOne address (was "aarambh") -> new one
   if (p === '/products/aarambh') { res.writeHead(301, { Location: '/products/vidyaone' }); return res.end(); }
-  const ip = req.socket.remoteAddress;
+  const ip = (TRUST_PROXY && String(req.headers['x-forwarded-for'] || '').split(',')[0].trim()) || req.socket.remoteAddress;
   try {
     // ---------- public API ----------
     if (p === '/api/catalog' && req.method === 'GET') {
@@ -193,7 +203,7 @@ http.createServer(async (req, res) => {
       const prod = readJSON(productsFile).products.find((x) => x.slug === p.split('/')[2] && x.published && x.status !== 'archived');
       let html = fs.readFileSync(path.join(PUB, 'product.html'), 'utf8');
       if (prod) {
-        const origin = `http://${req.headers.host}`, a = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+        const origin = siteOrigin(req), a = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
         html = html.replace('<title>Product</title>', () => `<title>${a(prod.name + ' — ' + prod.tagline)}</title>`)
           .replace('<meta name="description" content="">', () => `<meta name="description" content="${a(prod.overview.slice(0, 155))}">`)
           .replace('<link rel="canonical" href="">', () => `<link rel="canonical" href="${origin}/products/${prod.slug}">`)
@@ -204,10 +214,10 @@ http.createServer(async (req, res) => {
       return send(res, prod ? 200 : 404, html, TYPES['.html']);
     } else if (p === '/about' || p === '/contact' || p === '/services') file = path.join(PUB, p.slice(1) + '.html');
     else if (p === '/robots.txt') {
-      return send(res, 200, `User-agent: *\nDisallow: /admin\nDisallow: /api/admin\nSitemap: http://${req.headers.host}/sitemap.xml\n`, TYPES['.txt']);
+      return send(res, 200, `User-agent: *\nDisallow: /admin\nDisallow: /api/admin\nSitemap: ${siteOrigin(req)}/sitemap.xml\n`, TYPES['.txt']);
     }
     else if (p === '/sitemap.xml') {
-      const d = readJSON(productsFile); const host = `http://${req.headers.host}`;
+      const d = readJSON(productsFile); const host = siteOrigin(req);
       const urls = ['/', '/products', '/services', '/about', '/contact', '/privacy', '/terms', ...d.products.filter((x) => x.published && x.status !== 'archived').map((x) => '/products/' + x.slug)];
       return send(res, 200, `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((u) => `<url><loc>${host}${u}</loc></url>`).join('')}</urlset>`, TYPES['.xml']);
     } else if (p === '/privacy' || p === '/terms') file = path.join(PUB, p.slice(1) + '.html');

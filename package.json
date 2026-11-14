@@ -1,0 +1,9 @@
+{
+  "name": "seyon-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Seyon Solutions website: software and hardware, admin dashboard, enquiries.",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" }
+}

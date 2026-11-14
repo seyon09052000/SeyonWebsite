@@ -1,0 +1,22 @@
+# Render Blueprint: one web service with a permanent disk for products, enquiries and backups.
+services:
+  - type: web
+    name: seyon-website
+    runtime: node
+    plan: starter            # a paid plan is required for a persistent disk (free plans lose data on restart)
+    buildCommand: echo "no build step"
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: ADMIN_PASSWORD
+        sync: false          # you type this in the Render dashboard; never commit it
+      - key: NOTIFY_WEBHOOK_URL
+        sync: false          # optional: Slack/Discord/Zapier address for new-lead alerts
+    disk:
+      name: seyon-data
+      mountPath: /var/data
+      sizeGB: 1

@@ -37,6 +37,7 @@
     <span class="hero-rule" aria-hidden="true"></span>
     <p class="lead" id="lead"></p>
     <div class="btns"><button type="button" class="btn primary" data-enquiry="demo">Book a free demo <span aria-hidden="true">→</span></button><a class="btn hero-secondary" href="#find">Find the right solution <span aria-hidden="true">→</span></a></div>
+    <div class="hero-badges"><span>🧠 Business software</span><span>🖥️ Laptops, desktops &amp; IT support</span><span>📞 Call / WhatsApp: <b id="heroNum"></b></span></div>
     <a class="hero-chat" id="waHero" target="_blank" rel="noopener"><span class="chat-dot" aria-hidden="true"></span>Talk to our team on WhatsApp <span aria-hidden="true">↗</span></a>
   </div>
   <section class="featured-products" aria-labelledby="featuredHeading">
@@ -113,7 +114,7 @@
 <script>
 (async()=>{await layout('home');const {products,site}=await catalog();
 const $=id=>document.getElementById(id);
-$('lead').textContent='We provide both the software and the hardware: business software for schools, shops, showrooms, gyms and sports venues, plus the laptops, desktops and IT support to run it — without the complexity.';$('vision').textContent=site.vision;$('mission').textContent=site.mission;
+$('heroNum').textContent=site.whatsapp_display;$('lead').textContent='We provide both the software and the hardware: business software for schools, shops, showrooms, gyms and sports venues, plus the laptops, desktops and IT support to run it — without the complexity.';$('vision').textContent=site.vision;$('mission').textContent=site.mission;
 $('principles').innerHTML=site.principles.map(x=>`<div><div class="ic">${x.icon}</div><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p></div>`).join('');
 initProductExplorer(products);
 // counters computed from real data only
