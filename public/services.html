@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>document.documentElement.dataset.theme='light'</script><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IT Services by LapupTech | Seyon Solutions</title><meta name="description" content="Laptop and desktop sales, repair, servicing, custom gaming PCs, data recovery, remote support and custom software from our supporting partner LapupTech.">
+<meta property="og:title" content="IT Services by LapupTech"><meta property="og:description" content="Doorstep laptop service and remote support, laptop and desktop sales, repair, gaming PCs, data recovery and custom software.">
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/premium.css"><link rel="stylesheet" href="/ios.css"><link rel="stylesheet" href="/screens.css"><link rel="stylesheet" href="/color.css"><link rel="stylesheet" href="/bg.css"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/theme.css"></head><body>
+<div id="nav"></div><main id="main-content">
+<section class="page-hero"><div class="wrap"><span class="eyebrow">Services by LapupTech</span><h1>Hardware, repair and IT support for your business and home</h1>
+<p>Seyon Solutions provides both software and hardware. Our supporting partner LapupTech supplies the machines and keeps them running: laptop and desktop sales, repair, upgrades, data recovery, remote support and custom software.</p>
+<a class="hero-partner" href="https://www.lapuptech.com/" target="_blank" rel="noopener" aria-label="LapupTech"><img src="/assets/brand/lapuptech.png" alt="LapupTech"></a>
+<div class="hero-badges"><span>🚪 Doorstep laptop service</span><span>🌐 Remote support available</span><span>📞 Call / WhatsApp: <b id="heroWa"></b></span></div></div></section>
+
+<section class="s"><div class="wrap"><div class="section-heading"><div><h2>What we can help with</h2><p class="sub">Hardware to buy, and IT services to keep it running.</p></div></div>
+<div id="svcGroups"></div></div></section>
+
+<section class="s alt"><div class="wrap"><div class="svc-cta">
+<div><h2 style="margin:0 0 8px">Not sure what you need?</h2><p class="sub" style="margin:0">Tell us the problem or what you want to buy. We will suggest the right option and a fair price before any work starts.</p></div>
+<div class="btns"><a class="btn call" id="svcCall">📞 Call us</a><a class="btn wa" id="svcWa" target="_blank" rel="noopener">💬 WhatsApp us</a><button type="button" class="btn primary" data-enquiry="question" data-product="hardware">Send an enquiry <span aria-hidden="true">→</span></button><a class="btn" id="svcLt" target="_blank" rel="noopener">More at lapuptech.com ↗</a></div></div>
+<p class="note" style="margin-top:16px">Email: <a href="mailto:lapuptech@gmail.com">lapuptech@gmail.com</a>. Services are provided by LapupTech, our supporting partner. For full details, visit <a id="svcLt2" target="_blank" rel="noopener">lapuptech.com</a>.</p></div></section>
+</main><div id="foot"></div>
+<script src="/app.js"></script>
+<script>(async()=>{await layout('services');const {site}=await catalog();const $=id=>document.getElementById(id);
+const G=window.SERVICE_GROUPS||{hardware:'Hardware',service:'IT services'};const cls={hardware:'g-hw',service:'g-sv'};$('svcGroups').innerHTML=Object.keys(G).map(g=>{const items=SERVICES.filter(x=>x[4]===g);return items.length?'<div class="svc-group '+(cls[g]||'')+'"><h3 class="svc-group-title">'+esc(G[g])+'<span>'+items.length+'</span></h3><div class="svc-grid">'+items.map(([id,ic,t,d])=>'<article class="svc-card" id="'+id+'"><span class="svc-ic" aria-hidden="true">'+ic+'</span><h3>'+esc(t)+'</h3><p>'+esc(d)+'</p><a class="svc-ask" href="'+waLink(site,'Hello, I would like to know more about: '+t+'.')+'" target="_blank" rel="noopener">Ask about this <span aria-hidden="true">→</span></a></article>').join('')+'</div></div>':''}).join('');
+$('heroWa').textContent=site.whatsapp_display;
+$('svcCall').href=telHref(site.whatsapp_display);$('svcWa').href=waLink(site,'Hello, I would like to know more about your IT services.');
+$('svcLt').href=LAPUPTECH_URL;$('svcLt2').href=LAPUPTECH_URL;
+if(location.hash){const el=document.getElementById(location.hash.slice(1));if(el){setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash')},300);}}
+})();</script></body></html>

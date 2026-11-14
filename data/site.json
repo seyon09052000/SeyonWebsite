@@ -1,0 +1,29 @@
+{
+  "company": "Seyon Solutions",
+  "partner": "LapupTech",
+  "brand_tagline": "Software you can trust",
+  "tagline":"Software and hardware for schools, shops, showrooms, gyms and sports venues.",
+  "vision": "To put dependable, easy-to-use software in the hands of every small and growing business in India — in their own language, on the devices they already carry.",
+  "mission": "We build focused products that replace paper registers, missed follow-ups and end-of-day guesswork with clear, simple screens that any team member can use on day one.",
+  "principles": [
+    { "icon": "✨", "title": "Simple for staff, clear for owners", "text": "Every screen is designed so the newest team member can use it, while owners see the whole picture at a glance." },
+    { "icon": "🇮🇳", "title": "Built for India", "text": "GST-ready billing, UPI and Razorpay payments, WhatsApp messages and regional-language support across our products." },
+    { "icon": "🔒", "title": "Your data stays yours", "text": "Each school, shop, showroom or branch keeps its own separate space, with roles that decide who can see what." }
+  ],
+  "quotes": [
+    "Great software feels like a good shop assistant: quiet, quick and always right.",
+    "Build it simple enough for the newest staff member and strong enough for the owner.",
+    "Every business, every language, every device.",
+    "We build tools that give owners their evenings back.",
+    "Small businesses run India. Their software should work as hard as they do."
+  ],
+  "whatsapp": "917339573678",
+  "whatsapp_display": "73395 73678",
+  "contacts": [
+    { "name": "Pandu", "phone": "95669 38869" },
+    { "name": "Baskar", "phone": "89400 56128" },
+    { "name": "Hari", "phone": "75300 42372" },
+    { "name": "Naresh", "phone": "78457 82586" }
+  ],
+  "contact_email": "seyonsolutions.lapuptech@gmail.com"
+}

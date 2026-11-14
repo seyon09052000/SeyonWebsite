@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>document.documentElement.dataset.theme='light'</script><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About Seyon Solutions | Software and Hardware for Indian Businesses</title><meta name="description" content="Seyon Solutions provides business software and IT hardware for schools, shops, showrooms, gyms and sports venues across India.">
+<meta property="og:title" content="About Seyon Solutions"><meta property="og:description" content="Focused software for schools, shops, showrooms, gyms and sports venues across India.">
+<link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/premium.css"><link rel="stylesheet" href="/ios.css"><link rel="stylesheet" href="/screens.css"><link rel="stylesheet" href="/color.css"><link rel="stylesheet" href="/bg.css"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/theme.css"></head><body>
+<div id="nav"></div><main id="main-content">
+<section class="page-hero"><div class="wrap"><span class="eyebrow">About us</span><h1>About Seyon Solutions</h1><p id="tag"></p></div></section>
+<section class="s"><div class="wrap"><div class="vm"><article class="vm-card vm-a" id="our-vision"><span class="vm-ic">🎯</span><h2>Our vision</h2><p id="vision"></p></article><article class="vm-card vm-b" id="our-mission"><span class="vm-ic">🧭</span><h2>Our mission</h2><p id="mission"></p></article></div></div></section>
+<section class="s alt" id="stand-for"><div class="wrap"><h2>What we stand for</h2><div class="hl" id="principles"></div></div></section>
+<section class="s"><div class="wrap"><h2>What we build</h2><p class="sub">Software across education, retail, automotive, and sports and fitness.</p><div class="grid" id="list"></div></div></section>
+<section class="s alt"><div class="wrap" style="text-align:center"><h2>Want to see it with your own business in mind?</h2><p class="sub">Tell us what you run and we will suggest the right product and a practical walkthrough.</p>
+<div class="btns" style="justify-content:center"><button type="button" class="btn primary" data-enquiry="demo">Book a free demo</button><a class="btn" href="/contact">Contact us</a></div></div></section>
+</main><div id="foot"></div>
+<script src="/app.js"></script><script src="/screens.js"></script>
+<script>(async()=>{await layout('about');const {products,site}=await catalog();const $=id=>document.getElementById(id);
+$('tag').textContent=site.tagline;$('vision').textContent=site.vision;$('mission').textContent=site.mission;
+$('principles').innerHTML=site.principles.map(x=>'<div><div class="ic">'+esc(x.icon)+'</div><h3>'+esc(x.title)+'</h3><p>'+esc(x.text)+'</p></div>').join('');
+$('list').innerHTML=products.map(card).join('');})();</script></body></html>

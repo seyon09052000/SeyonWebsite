@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script>document.documentElement.dataset.theme='light'</script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title><meta name="robots" content="noindex"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/premium.css"><link rel="stylesheet" href="/ios.css"><link rel="stylesheet" href="/screens.css"><link rel="stylesheet" href="/color.css"><link rel="stylesheet" href="/bg.css"><link rel="stylesheet" href="/header.css"><link rel="stylesheet" href="/theme.css"></head><body>
+<div id="nav"></div>
+<section class="s adm"><div class="wrap">
+  <h2 style="margin-bottom:6px">Admin dashboard</h2>
+  <p class="sub" style="margin-top:0">Software and hardware are managed separately. Pick a tab.</p>
+  <div class="adm-tabs" role="tablist">
+    <button type="button" role="tab" id="t-sw" class="adm-tab sw" aria-selected="true" data-tab="sw">📦 Software <span id="c-sw"></span></button>
+    <button type="button" role="tab" id="t-hw" class="adm-tab hw" aria-selected="false" data-tab="hw">🖥️ Hardware &amp; IT <span id="c-hw"></span></button>
+  </div>
+
+  <div class="adm-panel sw" id="p-sw" role="tabpanel">
+    <div class="stats" id="stats-sw"></div>
+    <h3 class="adm-h">Software products</h3><div id="prods"></div>
+    <h3 class="adm-h">Waitlist registrations</h3><div id="wl"></div>
+    <h3 class="adm-h">Software enquiries</h3><div id="iq-sw"></div>
+  </div>
+
+  <div class="adm-panel hw" id="p-hw" role="tabpanel" hidden>
+    <div class="stats" id="stats-hw"></div>
+    <h3 class="adm-h">Hardware</h3><div id="svc-hardware"></div>
+    <h3 class="adm-h">IT services</h3><div id="svc-service"></div>
+    <h3 class="adm-h">Hardware &amp; IT enquiries</h3><div id="iq-hw"></div>
+  </div>
+</div></section>
+<div id="foot"></div><script src="/app.js"></script>
+<style>
+.adm-tabs{display:flex;gap:10px;margin:18px 0 0;flex-wrap:wrap}
+.adm-tab{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border:0;border-radius:16px 16px 0 0;font:inherit;font-weight:800;font-size:1.05rem;cursor:pointer;color:var(--text);background:#eef2f6;transition:background .2s}
+.adm-tab span{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 8px;border-radius:999px;font-size:.8rem;color:#fff}
+.adm-tab.sw span{background:#3b82f6}.adm-tab.hw span{background:#14a39a}
+.adm-tab.sw[aria-selected=true]{background:#e6f1fb;color:#1d5fbf;box-shadow:inset 0 -4px 0 #3b82f6}
+.adm-tab.hw[aria-selected=true]{background:#e0f5f3;color:#0e7d76;box-shadow:inset 0 -4px 0 #14a39a}
+.adm-tab:hover{filter:brightness(.97)}
+.adm-panel{padding:26px;border-radius:0 22px 22px 22px;margin-bottom:30px}
+.adm-panel.sw{background:linear-gradient(180deg,#e6f1fb,#f4f9fe);border:1px solid #cfe2f6}
+.adm-panel.hw{background:linear-gradient(180deg,#e0f5f3,#f1fbfa);border:1px solid #c6ebe7;border-radius:22px}
+.adm-panel[hidden]{display:none}
+.adm-h{font-size:1.3rem;margin:30px 0 12px}
+.adm-panel .stats{margin-top:0}
+.adm-panel.sw .stat{border-top:3px solid #3b82f6}.adm-panel.hw .stat{border-top:3px solid #14a39a}
+.adm-panel .box{background:#fff}
+.svc-edit{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:start}
+.svc-edit .ic{font-size:1.8rem;grid-row:span 3;padding-top:4px}
+.svc-edit .bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+</style>
+<script>
+let D, TAB = (location.hash === '#hardware') ? 'hw' : 'sw';
+const api=(u,o)=>fetch(u,o).then(async r=>{const j=await r.json();if(!r.ok)throw new Error(j.error||'Error');return j});
+const sendJSON=(u,b)=>api(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+const dt=r=>r.created_at.slice(0,16).replace('T',' ');
+const tbl=(rows,cols)=>rows.length?`<div style="overflow:auto"><table><tr>${cols.map(c=>`<th>${c[0]}</th>`).join('')}</tr>${rows.map(r=>`<tr>${cols.map(c=>`<td>${esc(c[1](r))}</td>`).join('')}</tr>`).join('')}</table></div>`:'<div class="empty">None yet.</div>';
+const statBox=(arr)=>arr.map(([a,b])=>`<div class="stat"><b>${b}</b><span>${a}</span></div>`).join('');
+function setTab(t){TAB=t;for(const k of ['sw','hw']){document.getElementById('p-'+k).hidden=k!==t;document.getElementById('t-'+k).setAttribute('aria-selected',String(k===t))}history.replaceState(null,'',t==='hw'?'#hardware':'#software')}
+document.querySelectorAll('.adm-tab').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+
+async function load(){D=await api('/api/admin/overview');
+  const swInq=D.inquiryRows.filter(r=>r.category!=='hardware'), hwInq=D.inquiryRows.filter(r=>r.category==='hardware');
+  const svc=D.services||[], pub=svc.filter(s=>s.published!==false);
+  document.getElementById('c-sw').textContent=D.total;document.getElementById('c-hw').textContent=svc.length;
+  document.getElementById('stats-sw').innerHTML=statBox([['Products',D.total],['Live',D.live],['Beta',D.beta],['Upcoming',D.upcoming],['Draft',D.draft],['Waitlist',D.waitlist],['Enquiries',swInq.length]]);
+  document.getElementById('stats-hw').innerHTML=statBox([['Items',svc.length],['Published',pub.length],['Hardware',svc.filter(s=>s.group==='hardware').length],['IT services',svc.filter(s=>s.group==='service').length],['Enquiries',hwInq.length],['New',hwInq.filter(r=>r.status==='new').length]]);
+
+  prods.innerHTML=D.products.map(p=>`<form class="box" style="margin-bottom:12px" data-s="${p.slug}">
+<div class="row"><b style="font-size:1.1rem">${esc(p.name)}</b>${badge(p.status)}<label style="margin:0 0 0 auto"><input type="checkbox" name="published" ${p.published?'checked':''} style="width:auto"> Published</label><label style="margin:0"><input type="checkbox" name="featured" ${p.featured?'checked':''} style="width:auto"> Featured</label></div>
+<div class="filters" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:12px">
+<div><label>Status</label><select name="status"><option value="${p.status}">${(STATUS[p.status]||[p.status])[0]} (current)</option>${(D.flow[p.status]||[]).map(s=>`<option value="${s}">→ ${(STATUS[s]||[s])[0]}</option>`).join('')}</select></div>
+<div><label>Launch date (only if known)</label><input name="launch_date" value="${esc(p.launch_date||'')}" placeholder="YYYY-MM-DD"></div>
+<div><label>App URL</label><input name="app_url" value="${esc(p.app_url)}" placeholder="https://"></div>
+<div><label>Demo URL</label><input name="demo_url" value="${esc(p.demo_url)}" placeholder="https://"></div>
+<div><label>Download URL</label><input name="download_url" value="${esc(p.download_url)}" placeholder="https://"></div>
+<div><label>Docs URL</label><input name="docs_url" value="${esc(p.docs_url)}" placeholder="https://"></div></div>
+<label style="margin-top:8px">Tagline</label><input name="tagline" value="${esc(p.tagline)}">
+<button class="btn primary" style="margin-top:12px">Save</button> <span class="msg"></span></form>`).join('');
+  prods.querySelectorAll('form').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const g=n=>f.elements[n];const m=f.querySelector('.msg');
+    try{await sendJSON('/api/admin/products/'+f.dataset.s,{status:g('status').value,launch_date:g('launch_date').value,app_url:g('app_url').value,demo_url:g('demo_url').value,download_url:g('download_url').value,docs_url:g('docs_url').value,tagline:g('tagline').value,published:g('published').checked,featured:g('featured').checked});m.className='msg ok';m.textContent='Saved';load()}catch(x){m.className='msg err';m.textContent=x.message}});
+  wl.innerHTML=tbl(D.waitlistRows,[['Date',dt],['Product',r=>r.product],['Email',r=>r.email],['Consent',r=>r.consent?'yes':'no'],['Verification',r=>r.verification]]);
+  document.getElementById('iq-sw').innerHTML=tbl(swInq,[['Date',dt],['Product',r=>r.product],['Type',r=>r.type],['Name',r=>r.name],['Email',r=>r.email],['Message',r=>r.message]]);
+
+  for(const g of ['hardware','service']){
+    document.getElementById('svc-'+g).innerHTML=svc.filter(s=>s.group===g).map(s=>`<form class="box" style="margin-bottom:12px" data-id="${s.id}"><div class="svc-edit"><span class="ic">${esc(s.icon)}</span>
+<div class="bar"><b style="flex:1;min-width:200px"><input name="title" value="${esc(s.title)}" aria-label="Title"></b><label style="margin:0"><input type="checkbox" name="published" ${s.published!==false?'checked':''} style="width:auto"> Published</label></div>
+<input name="description" value="${esc(s.description)}" aria-label="Description">
+<div class="bar"><label style="margin:0">Group <select name="group" style="width:auto">${Object.entries(D.serviceGroups||{}).map(([k,v])=>`<option value="${k}" ${k===s.group?'selected':''}>${esc(v)}</option>`).join('')}</select></label><button class="btn primary" style="padding:8px 18px">Save</button><span class="msg"></span></div></div></form>`).join('')||'<div class="empty">None.</div>';
+  }
+  document.querySelectorAll('#p-hw form').forEach(f=>f.onsubmit=async e=>{e.preventDefault();const g=n=>f.elements[n];const m=f.querySelector('.msg');
+    try{await sendJSON('/api/admin/services/'+f.dataset.id,{title:g('title').value,description:g('description').value,group:g('group').value,published:g('published').checked});m.className='msg ok';m.textContent='Saved';load()}catch(x){m.className='msg err';m.textContent=x.message}});
+  const sname=id=>(svc.find(s=>s.id===id)||{}).title||'';
+  document.getElementById('iq-hw').innerHTML=tbl(hwInq,[['Date',dt],['Service',r=>sname(r.service)||'(general)'],['Type',r=>r.type],['Name',r=>r.name],['Email',r=>r.email],['Message',r=>r.message]]);
+  setTab(TAB);
+}
+layout('').then(load);
+</script></body></html>

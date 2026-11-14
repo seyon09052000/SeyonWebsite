@@ -1,0 +1,10 @@
+{
+  "name": "Seyon Solutions",
+  "short_name": "Seyon",
+  "description": "Software products for schools, shops, showrooms, gyms and sports venues.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

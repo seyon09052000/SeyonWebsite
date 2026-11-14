@@ -1,0 +1,9 @@
+# Secrets and customer data: never commit
+data/.admin-password
+data/submissions/
+backups/
+.env
+.env.*
+node_modules/
+*.log
+*.tmp

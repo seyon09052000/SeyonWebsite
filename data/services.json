@@ -1,0 +1,96 @@
+{
+  "groups": {
+    "hardware": "Hardware",
+    "service": "IT services"
+  },
+  "services": [
+    {
+      "id": "laptop-desktop-sales",
+      "icon": "💻",
+      "title": "Laptop and desktop sales",
+      "description": "New and refurbished options, matched to your needs.",
+      "group": "hardware",
+      "published": true
+    },
+    {
+      "id": "custom-gaming-pcs",
+      "icon": "🎮",
+      "title": "Custom gaming PCs",
+      "description": "Built around your games and budget.",
+      "group": "hardware",
+      "published": true
+    },
+    {
+      "id": "workstations",
+      "icon": "🖥️",
+      "title": "Workstations",
+      "description": "High-performance systems for video editing and professional apps.",
+      "group": "hardware",
+      "published": true
+    },
+    {
+      "id": "spare-parts",
+      "icon": "🧩",
+      "title": "Spare parts",
+      "description": "RAM, SSDs, graphics cards, processors and motherboards.",
+      "group": "hardware",
+      "published": true
+    },
+    {
+      "id": "part-replacement",
+      "icon": "🔧",
+      "title": "Part replacement",
+      "description": "Screen, keyboard, battery, hinge, RAM and SSD.",
+      "group": "hardware",
+      "published": true
+    },
+    {
+      "id": "laptop-repair",
+      "icon": "🛠️",
+      "title": "Laptop repair",
+      "description": "Motherboard-level servicing and fault finding.",
+      "group": "service",
+      "published": true
+    },
+    {
+      "id": "servicing-thermal-paste",
+      "icon": "🌡️",
+      "title": "Servicing and thermal paste",
+      "description": "Cleaning and thermal paste replacement to fix heat and noise.",
+      "group": "service",
+      "published": true
+    },
+    {
+      "id": "windows-software-setup",
+      "icon": "🪟",
+      "title": "Windows and software setup",
+      "description": "Installation, drivers and software configuration.",
+      "group": "service",
+      "published": true
+    },
+    {
+      "id": "data-recovery",
+      "icon": "💾",
+      "title": "Data recovery and troubleshooting",
+      "description": "Help for failed drives and system problems.",
+      "group": "service",
+      "published": true
+    },
+    {
+      "id": "remote-support",
+      "icon": "🌐",
+      "title": "Remote support",
+      "description": "Help with software and setup problems over the internet.",
+      "group": "service",
+      "published": true
+    },
+    {
+      "id": "custom-software",
+      "icon": "⌨️",
+      "title": "Custom software",
+      "description": "Web applications, bike showroom and school management software.",
+      "group": "service",
+      "published": true
+    }
+  ]
+}
