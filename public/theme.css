@@ -607,3 +607,13 @@ section.s { padding-block: 56px; }
 @media (prefers-reduced-motion: reduce) { .rs-track { animation: none; } .runner-slim { overflow-x: auto; } }
 @media (min-width: 901px) { .home .hero > .hero-main { padding-block: 36px 40px; } }
 @media (min-width: 901px) { .home .hero .hero-chat { display: none; } }
+
+/* ---------- Scroller theme: bold teal brand strip with glass pills ---------- */
+.runner-slim { background: linear-gradient(90deg, #138a99 0%, #1fb0bd 50%, #138a99 100%); border-bottom: 3px solid #f39c2d; padding: 7px 0; }
+.rs-item { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.38); color: #fff; font-size: .82rem; font-weight: 700; padding: 4px 15px 4px 5px; backdrop-filter: blur(4px); text-shadow: 0 1px 2px rgba(0,0,0,.18); }
+.rs-item:hover { background: rgba(255,255,255,.3); transform: translateY(-1px); }
+.rs-sw, .rs-hw { border-left-width: 1px; }
+.rs-ic { width: 24px; height: 24px; background: #fff !important; box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+.rs-sw .rs-ic { box-shadow: 0 0 0 2px #7ee7ee; }
+.rs-hw .rs-ic { box-shadow: 0 0 0 2px #ffbf66; }
+.rs-sw .rs-ic img { padding: 2px; }
